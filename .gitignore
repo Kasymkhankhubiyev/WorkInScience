@@ -1,1 +1,13 @@
 WorkInScience/keys.py
+mainapp/__pycache__/__init__.cpython-39.pyc
+mainapp/__pycache__/admin.cpython-39.pyc
+mainapp/__pycache__/models.cpython-39.pyc
+mainapp/__pycache__/apps.cpython-39.pyc
+mainapp/__pycache__/urls.cpython-39.pyc
+mainapp/__pycache__/views.cpython-39.pyc
+mainapp/migrations/__pycache__/__init__.cpython-39.pyc
+WorkInScience/__pycache__/__init__.cpython-39.pyc
+WorkInScience/__pycache__/settings.cpython-39.pyc
+WorkInScience/__pycache__/keys.cpython-39.pyc
+WorkInScience/__pycache__/wsgi.cpython-39.pyc
+WorkInScience/__pycache__/urls.cpython-39.pyc
