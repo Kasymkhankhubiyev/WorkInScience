@@ -49,5 +49,32 @@
         </nav>
         {% block body %}
         {% endblock %}
+
+        <style>
+            .enddata{
+                color: white;
+            }
+        </style>
+
+        <div class="container-fluid bg-dark">
+            <div class="row">
+                <div class="col">
+                    <img src="{% static 'mainapp/logo.png' %}" width="250px;">
+                </div>
+                <div class="col">
+                    <p class="enddata" style="padding: 20px;">мы в соц сетях:</p>
+                    <button type="button" class="btn btn-dark">Вконтакте</button>
+                </div>
+                <div class="col">
+                    <div>
+                        <p class="enddata" style="padding: 20px;">Контакты</p>
+                        <p class="enddata">wis@bestcompany.ru</p>
+                        <p class="enddata">+7-777-777-77-77</p>
+                        <p class="enddata">Пирогова 18, Новосибирск</p>
+                        <p class="enddata">Азаттык 123, Атырау</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
