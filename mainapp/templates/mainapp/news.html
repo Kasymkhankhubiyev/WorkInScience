@@ -1,5 +1,149 @@
 {% extends 'layouts/layout.html' %}
+{% load static %}
 
 {% block body %}
-<h1>News must be here</h1>
+<div id="demo" class="carousel slide" data-bs-ride="carousel" style="padding: 20px;">
+
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
+    </div>
+
+    <style>
+        .caption-heading {
+            color: black;
+        }
+
+        .caption-btn {
+            font-size: 21px;
+        }
+
+        .caption-a {
+            font-size: 21px;
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+  
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/lab1.png' %}" alt="Laboratory" class="d-block w-100" width="300" height="520">
+        <div class="carousel-caption bg-white rounded-pill" style="opacity: 0.5;">
+            <h3 class="caption-heading">Колаборация НИИ и Частной клиники</h3>
+            <!-- <button type="button" class="btn caption-btn">Созданы бактерии, способные изменить современную медицину</button> -->
+            <a href="#" class="caption-a">Созданы бактерии, способные изменить современную медицину</a>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/lab2.png' %}" alt="Laboratory" class="d-block w-100" width="300" height="520">
+        <div class="carousel-caption bg-white rounded-pill" style="opacity: 0.5;">
+            <h3 class="caption-heading">Студенты и лазерная резка</h3>
+            <!-- <button type="button" class="btn caption-btn">Студенты приняли участие в разработке новой технологии лазерной резки</button> -->
+            <a href="#" class="caption-a">Студенты приняли участие в разработке новой технологии лазерной резки</a>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/lab3.png' %}" alt="Laboratory" class="d-block w-100" width="300" height="520">
+        <div class="carousel-caption bg-white rounded-pill" style="opacity: 0.5;">
+            <h3 class="caption-heading">Литография выходит на новый уровень.</h3>
+            <!-- <button type="button" class="btn caption-btn">НИИ участвует в строительстве ногово центра</button> -->
+            <a href="#" class="caption-a">НИИ участвует в строительстве ногово центра</a>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/lab4.png' %}" alt="Laboratory" class="d-block w-100" width="300" height="520">
+        <div class="carousel-caption bg-white rounded-pill" style="opacity: 0.5;">
+            <h3 class="caption-heading">Производственная автоматизация</h3>
+            <!-- <button type="button" class="btn caption-btn">Как участники WiS автомаизируют производства</button> -->
+            <a href="#" class="caption-a">Как участники WiS автомаизируют производства</a>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/lab6.png' %}" alt="Laboratory" class="d-block w-100" width="300" height="520">
+        <div class="carousel-caption bg-white rounded-pill" style="opacity: 0.5;">
+            <h3 class="caption-heading">Студенты и практика</h3>
+            <!-- <button type="button" class="btn caption-btn">Открыт новые ко-воркинг центр для студентов</button> -->
+            <a href="#" class="caption-a">Открыт новый ко-воркинг центр для студентов</a>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<div class="container-fluid border pt-3 pb-3 ms-3">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card mb-3" style="width: 400px;">
+                <img class="card-img-top" src="{% static 'images/wis_blue.png' %}" alt="WiS" style="width: 100%;">
+                <div class="card-body">
+                    <h4>WiS - Work in Science</h4>
+                    <p>Студентам легко найти научного руководителя</p>
+                    <a href="#" class="btn btn-primary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 400px;">
+                <img class="card-img-top" src="{% static 'images/wis_grad_red.png' %}" alt="WiS" style="width: 100%;">
+                <div class="card-body">
+                    <h4>WiS - Work in Science</h4>
+                    <p>Помогаем найти стажировку</p>
+                    <a href="#" class="btn btn-primary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 400px;">
+                <img class="card-img-top" src="{% static 'images/wis_yellow.png' %}" alt="WiS" style="width: 100%;">
+                <div class="card-body">
+                    <h4>WiS - Work in Science</h4>
+                    <p>Студентам проще устроиться на работу</p>
+                    <a href="#" class="btn btn-primary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 400px;">
+                <img class="card-img-top" src="{% static 'images/wis_grad_blue.png' %}" alt="WiS" style="width: 100%;">
+                <div class="card-body">
+                    <h4>WiS - Work in Science</h4>
+                    <p>Институты набирают студентов для передовых исследований</p>
+                    <a href="#" class="btn btn-primary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 400px;">
+                <img class="card-img-top" src="{% static 'images/wis_grad_orng.png' %}" alt="WiS" style="width: 100%;">
+                <div class="card-body">
+                    <h4>WiS - Work in Science</h4>
+                    <p>Компании теснее сотрудничают с НИИ</p>
+                    <a href="#" class="btn btn-primary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 400px;">
+                <img class="card-img-top" src="{% static 'images/wis_grad_pink.png' %}" alt="WiS" style="width: 100%;">
+                <div class="card-body">
+                    <h4>WiS - Work in Science</h4>
+                    <p>Компании нанимают специалистов еще в университетах</p>
+                    <a href="#" class="btn btn-primary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
