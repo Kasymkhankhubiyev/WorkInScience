@@ -17,3 +17,9 @@ def institute(request: HttpRequest) -> HttpResponse:
 
 def student(request: HttpRequest) -> HttpResponse:
     return render(request, 'mainapp/student.html')
+
+def login(request: HttpRequest) -> HttpResponse:
+    return render(request, 'mainapp/login.html')
+
+def register(request: HttpRequest) -> HttpResponse:
+    return render(request, 'mainapp/register.html')
