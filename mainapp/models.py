@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 # Create your models here.
 class User(models.Model):
@@ -33,3 +34,13 @@ class Organization(models.Model):
 class Passwords(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     password = models.TextField()
+
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'second_name', 'last_name', 'email')
+
+
+class LogInUser():
+    pass
