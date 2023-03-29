@@ -1,8 +1,8 @@
-from django.forms import ModelForm, EmailField, CharField, PasswordInput
+from django.forms import ModelForm, EmailField, CharField, PasswordInput, EmailInput
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 
-from .models import User
+from .models import User, AvailableEmailDomens
 
 class UserRegForm(ModelForm):
     email = EmailField(required=True, label='Email:')
@@ -18,6 +18,17 @@ class UserRegForm(ModelForm):
         if password1:
             password_validation.validate_password(password1)
         return password1
+    
+    def email_is_available(self):
+        email = self.changed_data['email']
+        # domens = AvailableEmailDomens.
+        """тут нужно проверить, есть ли доступный домен в указанном электронном адресе.
+        Если нет - кидаем ошибку,
+        Если есть - нет.
+
+        Может нужно запихнуть в функцию clean() ниже????
+        """
+
 
     def clean(self):
         super().clean()
@@ -41,3 +52,15 @@ class UserRegForm(ModelForm):
             user.save()
         # user_registered.send(RegisterUserForm, instance=user)
         return user
+    
+
+class UserLogInForm(ModelForm):
+    email = CharField(label='Электронный адрес', widget=EmailInput)
+    password = CharField(label='Пароль', widget=PasswordInput)
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+
+    def check_user(self):
+        email = self.cleaned_data['email']
+        pswd = self.cleaned_data['password']

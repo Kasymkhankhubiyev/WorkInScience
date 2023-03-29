@@ -4,7 +4,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 
-from .forms import UserRegForm
+from .forms import UserRegForm, UserLogInForm
 
 # Create your views here.
 def mainpage(request: HttpRequest) -> HttpResponse:
@@ -23,14 +23,18 @@ def student(request: HttpRequest) -> HttpResponse:
     return render(request, 'mainapp/student.html')
 
 def login(request: HttpRequest) -> HttpResponse:
-    return render(request, 'mainapp/login.html')
+    if request.method == 'POST':
+        user_form = UserLogInForm(request.POST)
+        if user_form.is_valid():
+            pass
+        else:
+            context = {'form': user_form, 'heading': 'Вход'}
+            return render(request, 'mainapp/login.html', context)
+    else:
+        user_form = UserLogInForm()
+        context = {'form': user_form, 'heading': 'Вход'}
+        return render(request, 'mainapp/login.html', context)
 
-def check_pswds(pswd1, pswd2):
-        """Проверяем, совпадают ли два введенных пароля
-        """
-        if pswd1 != '' and pswd2 != '' and pswd1 == pswd2:
-            return True
-        return False
 
 def register(request: HttpRequest) -> HttpResponse:
     """Этот контроллер создает форму для регистрации нового участника
@@ -42,23 +46,14 @@ def register(request: HttpRequest) -> HttpResponse:
         user_form = UserRegForm(request.POST)
         if user_form.is_valid():
             user_form.save()
-            return HttpResponseRedirect('mainpage')
-            # return reverse_lazy('mainpage')
+            return render(request, 'mainapp/registretion_proceeded.html')
         else:
-            context = {'form': user_form}
-        # print(f'first name: {first_name}')
+            context = {'form': user_form, 'heading': 'Регистрация'}
             return render(request, 'mainapp/register.html', context)
-        
-        # в JS надо через JSON пихать
     else:
         user_form = UserRegForm()
-        context = {'form': user_form}
+        context = {'form': user_form, 'heading': 'Регистрация'}
         return render(request, 'mainapp/register.html', context)
-
-
-# class CreateUser(CreateView):
-#     template_name = 'mainapp/register.html'
-#     success_url = '/mainapp/'
 
 
 class UserCreateView(CreateView):

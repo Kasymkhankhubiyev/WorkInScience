@@ -11,6 +11,8 @@ class User(models.Model):
     nickname = models.CharField(max_length=64, unique=True, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     password = models.CharField(null=False, blank=False, max_length=64)
+    is_active = models.BooleanField(default=False)
+    # is_activated = models.BooleanField(default=False)  # позже добавим для валидации электронного адреса
 
     def __str__(self) -> str:
         if self.second_name:
@@ -38,14 +40,7 @@ class Organization(models.Model):
     def __str__(self) -> str:
         return f'Наименование: {self.name} ::: БИН {self.bin} ::: Тип {self.organization_type}'
 
-# class OrganizationStuff(models.Model):
-#     pass
 
-class UserForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ('first_name', 'second_name', 'last_name', 'email')
+class AvailableEmailDomens(models.Model):
+    domen = models.CharField(max_length=64, null=False, blank=False)
 
-
-class LogInUser():
-    pass

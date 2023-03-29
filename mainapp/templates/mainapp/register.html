@@ -1,51 +1,11 @@
 {% extends 'layouts/loging_template.html' %}
 
 {% block body %}
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        if (!'{{ equal_pswds }}'){
-            document.querySelector('#confirm_pwd_label').style.color = 'red';
-            document.querySelector('#confirm_pwd_label').innerHTML = 'Пароли не совпадают'
-        }
-    });
-</script>
-
 <div class="container border pt-5 ms-5 pb-3 mt-5">
     <h1>Заполните форму для регистрации.</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <!-- <div class="mb-3">
-            <div class="row">
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="Имя" name="first_name" required value="{{ first_name }}">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="Фамилия" name="last_name" required value="{{ last_name }}">
-                </div>
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Введите электронный адрес" name="email" value="{{ email }}" required>
-        </div>
-        <div class="mb-3">
-            <label for="pwd">Пароль:</label>
-            <input type="password" class="form-control" id="pwd1" placeholder="Введите Пароль" name="pswd1">
-        </div>
-        <div class="mb-3">
-            <label for="pwd" id="confirm_pwd_label">Повторите Пароль:</label>
-            <input type="password" class="form-control" id="pwd2" placeholder="Введите Пароль" name="pswd2">
-        </div>
-        <div class="mb-3">
-            <label for="organization">Выберите организацию:</label>
-            <input name="organization" list="organizations" placeholder="Организация">
-            <datalist id="organizations">
-                <option value="Сотрудник Компании">
-                <option value="Сотрудник Института">
-                <option value="Сотрудник Лаборатории">
-                <option value="Студент">
-        </div> -->
         <input type="submit" class="btn btn-primary" value="Подтвердить">
     </form>
 </div>

@@ -5,7 +5,8 @@
     <h1>Заполните форму для входа.</h1>
     <form method="post">
         {% csrf_token %}
-        <div class="mb-3 mt-3">
+        {{ form.as_p }}
+        <!-- <div class="mb-3 mt-3">
             <label for="email" class="form-label">Email:</label>
             <input type="email" class="form-control" id="email" placeholder="Введите электронный адрес" name="email" required>
         </div>
@@ -17,7 +18,7 @@
             <label class="form-check-lable">
                 <input class="form-check-input" type="checkbox" name="remember"> Запомнить меня
             </label>
-        </div>
+        </div> -->
         <!-- <button type="submit" class="btn btn-primary">Подтвердить</button> -->
         <input type="submit" class="btn btn-primary" value="Подтвердить">
     </form>
