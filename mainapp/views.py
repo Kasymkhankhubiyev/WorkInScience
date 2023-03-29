@@ -4,6 +4,8 @@ from django.http import HttpRequest, HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 
+from .forms import UserRegForm
+
 # Create your views here.
 def mainpage(request: HttpRequest) -> HttpResponse:
     return render(request, 'mainapp/mainpage.html')
@@ -26,7 +28,7 @@ def login(request: HttpRequest) -> HttpResponse:
 def check_pswds(pswd1, pswd2):
         """Проверяем, совпадают ли два введенных пароля
         """
-        if pswd1 == pswd2:
+        if pswd1 != '' and pswd2 != '' and pswd1 == pswd2:
             return True
         return False
 
@@ -51,16 +53,30 @@ def register(request: HttpRequest) -> HttpResponse:
                 'first_name': first_name,
                 'last_name': last_name,
                 'email': email,
-                'organization': organization
+                'organization': organization,
+                'equal_pswds': False
             })
+        
+        # в JS надо через JSON пихать
     return render(request, 'mainapp/register.html', {
         'first_name': '',
         'last_name': '',
         'email': '',
-        'organization': ''
+        'organization': '',
+        'equal_pswds': True
     })
 
 
 # class CreateUser(CreateView):
 #     template_name = 'mainapp/register.html'
 #     success_url = '/mainapp/'
+
+
+class UserCreateView(CreateView):
+    template_name = 'mainapp/register.html'
+    form_class = UserRegForm
+    success_url = reverse_lazy('mainpage') #  '/mainapp/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
