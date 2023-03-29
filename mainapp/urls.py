@@ -10,6 +10,6 @@ urlpatterns = [
     path("news/", views.news, name='news'),
     path("student/", views.student, name='student'),
     path("login/", views.login, name="login"),
-    # path("register/", views.register, name="register"),
-    path("register/", views.UserCreateView.as_view(), name="register"),
+    path("register/", views.register, name="register"),
+    # path("register/", views.UserCreateView.as_view(), name="register"),
 ]

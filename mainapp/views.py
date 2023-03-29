@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 
@@ -39,32 +39,21 @@ def register(request: HttpRequest) -> HttpResponse:
     """
     # проверяем, это запрос на создание формы или запрос с входными данными
     if request.method == 'POST':
-        form = request.POST
-        print(f'form data: {form}')
-        if check_pswds(form['pswd1'], form['pswd2']):
-            pass
+        user_form = UserRegForm(request.POST)
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect('mainpage')
+            # return reverse_lazy('mainpage')
         else:
-            first_name = form['first_name']
-            last_name = form['last_name']
-            email = form['email']
-            organization = form['organization']
+            context = {'form': user_form}
         # print(f'first name: {first_name}')
-            return render(request, 'mainapp/register.html', {
-                'first_name': first_name,
-                'last_name': last_name,
-                'email': email,
-                'organization': organization,
-                'equal_pswds': False
-            })
+            return render(request, 'mainapp/register.html', context)
         
         # в JS надо через JSON пихать
-    return render(request, 'mainapp/register.html', {
-        'first_name': '',
-        'last_name': '',
-        'email': '',
-        'organization': '',
-        'equal_pswds': True
-    })
+    else:
+        user_form = UserRegForm()
+        context = {'form': user_form}
+        return render(request, 'mainapp/register.html', context)
 
 
 # class CreateUser(CreateView):
