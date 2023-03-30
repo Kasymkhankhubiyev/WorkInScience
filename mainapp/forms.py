@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 
 from .models import User, AvailableEmailDomens
 
+from .exceptions import NotAvailableDomen, EmailIsBusy
+
 class UserRegForm(ModelForm):
     email = EmailField(required=True, label='Email:')
     password1 = CharField(label='Пароль',widget=PasswordInput, help_text=password_validation.password_validators_help_text_html())
@@ -20,8 +22,18 @@ class UserRegForm(ModelForm):
         return password1
     
     def email_is_available(self):
-        email = self.changed_data['email']
-        # domens = AvailableEmailDomens.
+        email = self.cleaned_data['email']
+        input_domen = email.split('@')[1]
+        try:
+            AvailableEmailDomens.objects.get(domen=input_domen)
+            user = User.objects.get(email=email)
+            if user:
+                raise EmailIsBusy(email=email)
+        except AvailableEmailDomens.DoesNotExist:
+            raise NotAvailableDomen(input_domen)
+        except User.DoesNotExist:
+            pass
+            
         """тут нужно проверить, есть ли доступный домен в указанном электронном адресе.
         Если нет - кидаем ошибку,
         Если есть - нет.
@@ -38,6 +50,12 @@ class UserRegForm(ModelForm):
             errors = {'password2': ValidationError('Введенные пароли не совпадают',
                                                     code='password_mismatch')}
             raise ValidationError(errors)
+        try:
+            self.email_is_available()
+        except NotAvailableDomen as e:
+            raise ValidationError({'email': ValidationError(e.args)})
+        except EmailIsBusy as e:
+            raise ValidationError({'email': ValidationError(e.args)})
 
     def save(self, commit=True):
         # user = super().save(commit=False)
