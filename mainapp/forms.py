@@ -42,7 +42,7 @@ class UserRegForm(ModelForm):
         """
 
 
-    def clean(self):
+    def clean(self) -> None:
         super().clean()
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
@@ -57,7 +57,7 @@ class UserRegForm(ModelForm):
         except EmailIsBusy as e:
             raise ValidationError({'email': ValidationError(e.args)})
 
-    def save(self, commit=True):
+    def save(self, commit=True) -> User:
         # user = super().save(commit=False)
         user = User()
         user.first_name = self.cleaned_data['first_name']
@@ -82,3 +82,23 @@ class UserLogInForm(ModelForm):
     def check_user(self):
         email = self.cleaned_data['email']
         pswd = self.cleaned_data['password']
+
+    def clean(self):
+        """Здесь проверяем ввод данных.
+        Если нет совпадающего email - вызываем исключение
+        Если пользователь с ввденным email существует, проверяем пароль.
+        Если хэшированный пароль не овпадает - бросаем исключение.
+        """
+        super().clean()
+        password = self.cleaned_data['password']
+        email = self.cleaned_data['email']
+        try:
+            self.email_is_available()
+            user = User.objects.get(email=email)
+            if user.password != password:
+                raise ValidationError({'email': ValidationError('Неверный логин или пароль')})
+        except User.DoesNotExist as e:
+            raise ValidationError({'email': ValidationError('Неверный логин или пароль')})
+        
+    def get_user(self) -> User:
+        return  User.objects.get(email=self.cleaned_data['email'])

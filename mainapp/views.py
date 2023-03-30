@@ -23,10 +23,15 @@ def student(request: HttpRequest) -> HttpResponse:
     return render(request, 'mainapp/student.html')
 
 def login(request: HttpRequest) -> HttpResponse:
+    """Это контроллер входа в учетную запись.
+    """
     if request.method == 'POST':
         user_form = UserLogInForm(request.POST)
         if user_form.is_valid():
-            pass
+            user = user_form.get_user()
+            context = {'first_name': user.first_name, 
+                       'last_name': user.last_name,}
+            return render(request, 'wis/account.html', context)
         else:
             context = {'form': user_form, 'heading': 'Вход'}
             return render(request, 'mainapp/login.html', context)
@@ -45,8 +50,9 @@ def register(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         user_form = UserRegForm(request.POST)
         if user_form.is_valid():
-            user_form.save()
-            return render(request, 'mainapp/registretion_proceeded.html')
+            user = user_form.save()
+            return render(request, 'mainapp/registretion_proceeded.html', {'first_name': user.first_name,
+                                                                           'last_name': user.last_name,})
         else:
             context = {'form': user_form, 'heading': 'Регистрация'}
             return render(request, 'mainapp/register.html', context)
@@ -54,13 +60,3 @@ def register(request: HttpRequest) -> HttpResponse:
         user_form = UserRegForm()
         context = {'form': user_form, 'heading': 'Регистрация'}
         return render(request, 'mainapp/register.html', context)
-
-
-class UserCreateView(CreateView):
-    template_name = 'mainapp/register.html'
-    form_class = UserRegForm
-    success_url = reverse_lazy('mainpage') #  '/mainapp/'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
