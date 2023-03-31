@@ -46,7 +46,8 @@ def register(request: HttpRequest) -> HttpResponse:
         if user_form.is_valid():
             user = user_form.save()
             return render(request, 'mainapp/registretion_proceeded.html', {'first_name': user.first_name,
-                                                                           'last_name': user.last_name,})
+                                                                           'last_name': user.last_name,
+                                                                           'login': user.username,})
         else:
             context = {'form': user_form, 'heading': 'Регистрация'}
             return render(request, 'mainapp/register.html', context)

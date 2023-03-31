@@ -52,12 +52,12 @@ class UserRegForm(ModelForm):
             raise ValidationError({'email': ValidationError(e.args)})
 
     def save(self, commit=True) -> User:
-        # user = super().save(commit=False)
-        user = User()
+        user = super().save(commit=False)
+        # user = User()
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
-        user.password = self.cleaned_data['password1']
+        # user.email = self.cleaned_data['email']
+        user.set_password(self.cleaned_data['password1'])
         user.username = self.cleaned_data['email'].split('@')[0]
         if commit:
             user.save()
