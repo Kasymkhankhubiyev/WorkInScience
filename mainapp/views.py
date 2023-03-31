@@ -29,9 +29,9 @@ def login(request: HttpRequest) -> HttpResponse:
         user_form = UserLogInForm(request.POST)
         if user_form.is_valid():
             user = user_form.get_user()
-            context = {'first_name': user.first_name, 
-                       'last_name': user.last_name,}
-            return render(request, 'wis/account.html', context)
+            context = {'first_name': user.first_name,
+                       'last_name': user.last_name}
+            return render(request, 'wis/account.html', context)  # как перенаправить?
         else:
             context = {'form': user_form, 'heading': 'Вход'}
             return render(request, 'mainapp/login.html', context)

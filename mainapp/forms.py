@@ -73,8 +73,9 @@ class UserRegForm(ModelForm):
     
 
 class UserLogInForm(ModelForm):
-    email = CharField(label='Электронный адрес', widget=EmailInput)
-    password = CharField(label='Пароль', widget=PasswordInput)
+    email = EmailField(label='Электронный адрес', required=True)
+    password = CharField(label='Пароль', widget=PasswordInput, required=True)
+
     class Meta:
         model = User
         fields = ('email', 'password')
@@ -93,7 +94,6 @@ class UserLogInForm(ModelForm):
         password = self.cleaned_data['password']
         email = self.cleaned_data['email']
         try:
-            self.email_is_available()
             user = User.objects.get(email=email)
             if user.password != password:
                 raise ValidationError({'email': ValidationError('Неверный логин или пароль')})
