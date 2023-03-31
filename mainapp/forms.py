@@ -64,6 +64,7 @@ class UserRegForm(ModelForm):
         user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
         user.password = self.cleaned_data['password1']
+        user.username = self.cleaned_data['email'].split('@')[0]
         # user.is_active = True  #  False
         # user.is_activated = False
         if commit:
