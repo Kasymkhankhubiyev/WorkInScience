@@ -28,24 +28,6 @@ def other_page(request: HttpRequest, page: str) -> HttpResponse:
 def profile(request: HttpRequest) -> HttpResponse:
     return render(request, 'wis/profile.html')
 
-# def login(request: HttpRequest) -> HttpResponse:
-#     """Это контроллер входа в учетную запись.
-#     """
-#     if request.method == 'POST':
-#         user_form = UserLogInForm(request.POST)
-#         if user_form.is_valid():
-#             user = user_form.get_user()
-#             context = {'first_name': user.first_name,
-#                        'last_name': user.last_name}
-#             return render(request, 'wis/account.html', context)  # как перенаправить?
-#         else:
-#             context = {'form': user_form, 'heading': 'Вход'}
-#             return render(request, 'mainapp/login.html', context)
-#     else:
-#         user_form = UserLogInForm()
-#         context = {'form': user_form, 'heading': 'Вход'}
-#         return render(request, 'mainapp/login.html', context)
-
 class WiSLoginView(LoginView):
     template_name = 'mainapp/login.html'
 

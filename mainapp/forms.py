@@ -7,6 +7,8 @@ from .models import User, AvailableEmailDomens
 from .exceptions import NotAvailableDomen, EmailIsBusy
 
 class UserRegForm(ModelForm):
+    first_name = CharField(label='Имя', required=True, max_length=64)
+    last_name = CharField(label='Фамилия', required=True, max_length=64)
     email = EmailField(required=True, label='Email:')
     password1 = CharField(label='Пароль',widget=PasswordInput, help_text=password_validation.password_validators_help_text_html())
     password2 = CharField(label='Пароль (повторно)', widget=PasswordInput, help_text='Введите тот же самый пароль еще раз для проверки')
@@ -33,14 +35,6 @@ class UserRegForm(ModelForm):
             raise NotAvailableDomen(input_domen)
         except User.DoesNotExist:
             pass
-            
-        """тут нужно проверить, есть ли доступный домен в указанном электронном адресе.
-        Если нет - кидаем ошибку,
-        Если есть - нет.
-
-        Может нужно запихнуть в функцию clean() ниже????
-        """
-
 
     def clean(self) -> None:
         super().clean()
@@ -65,11 +59,8 @@ class UserRegForm(ModelForm):
         user.email = self.cleaned_data['email']
         user.password = self.cleaned_data['password1']
         user.username = self.cleaned_data['email'].split('@')[0]
-        # user.is_active = True  #  False
-        # user.is_activated = False
         if commit:
             user.save()
-        # user_registered.send(RegisterUserForm, instance=user)
         return user
     
 
@@ -80,10 +71,6 @@ class UserLogInForm(ModelForm):
     class Meta:
         model = User
         fields = ('email', 'password')
-
-    def check_user(self):
-        email = self.cleaned_data['email']
-        pswd = self.cleaned_data['password']
 
     def clean(self):
         """Здесь проверяем ввод данных.

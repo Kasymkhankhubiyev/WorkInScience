@@ -10,5 +10,6 @@ urlpatterns = [
     path('accounts/logout/', views.WiSLogoutView.as_view(), name='logout'),
     path('accounts/profile/', views.profile, name='profile'),
     path('<str:page>/', views.other_page, name='other'),
-    path("register/", views.register, name="register"),
+    # path("register/", views.register, name="register"),
+    path("accounts/register/", views.register, name="register"),
 ]
