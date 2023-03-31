@@ -5,6 +5,9 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 
 from .forms import UserRegForm, UserLogInForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def mainpage(request: HttpRequest) -> HttpResponse:
@@ -22,23 +25,33 @@ def institute(request: HttpRequest) -> HttpResponse:
 def student(request: HttpRequest) -> HttpResponse:
     return render(request, 'mainapp/student.html')
 
-def login(request: HttpRequest) -> HttpResponse:
-    """Это контроллер входа в учетную запись.
-    """
-    if request.method == 'POST':
-        user_form = UserLogInForm(request.POST)
-        if user_form.is_valid():
-            user = user_form.get_user()
-            context = {'first_name': user.first_name,
-                       'last_name': user.last_name}
-            return render(request, 'wis/account.html', context)  # как перенаправить?
-        else:
-            context = {'form': user_form, 'heading': 'Вход'}
-            return render(request, 'mainapp/login.html', context)
-    else:
-        user_form = UserLogInForm()
-        context = {'form': user_form, 'heading': 'Вход'}
-        return render(request, 'mainapp/login.html', context)
+@login_required
+def profile(request: HttpRequest) -> HttpResponse:
+    return render(request, 'wis/profile.html')
+
+# def login(request: HttpRequest) -> HttpResponse:
+#     """Это контроллер входа в учетную запись.
+#     """
+#     if request.method == 'POST':
+#         user_form = UserLogInForm(request.POST)
+#         if user_form.is_valid():
+#             user = user_form.get_user()
+#             context = {'first_name': user.first_name,
+#                        'last_name': user.last_name}
+#             return render(request, 'wis/account.html', context)  # как перенаправить?
+#         else:
+#             context = {'form': user_form, 'heading': 'Вход'}
+#             return render(request, 'mainapp/login.html', context)
+#     else:
+#         user_form = UserLogInForm()
+#         context = {'form': user_form, 'heading': 'Вход'}
+#         return render(request, 'mainapp/login.html', context)
+
+class WiSLoginView(LoginView):
+    template_name = 'mainapp/login.html'
+
+class WiSLogoutView(LoginRequiredMixin, LogoutView):
+    template_name = 'mainapp/logout.html'
 
 
 def register(request: HttpRequest) -> HttpResponse:
