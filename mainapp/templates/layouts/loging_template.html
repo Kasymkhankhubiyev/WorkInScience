@@ -11,7 +11,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
-        <a href="{% url 'mainpage' %}" class="btn btn-lg mt-3 ms-5" style="border: 2px solid black; border-radius: 5px;">Назад в меню</a>
+        <a href="{% url 'mainapp:mainpage' %}" class="btn btn-lg mt-3 ms-5" style="border: 2px solid black; border-radius: 5px;">Назад в меню</a>
         {% block body %}
         {% endblock %}
     </body>

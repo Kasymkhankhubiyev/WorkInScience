@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 
@@ -8,22 +8,21 @@ from .forms import UserRegForm, UserLogInForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.template.loader import get_template
+from django.template import TemplateDoesNotExist
 
 # Create your views here.
 def mainpage(request: HttpRequest) -> HttpResponse:
+    if request.user.is_authenticated:
+        return render(request, 'wis/feed.html')
     return render(request, 'mainapp/mainpage.html')
 
-def news(request: HttpRequest) -> HttpResponse:
-    return render(request, 'mainapp/news.html')
-
-def company(request: HttpRequest) -> HttpResponse:
-    return render(request, 'mainapp/company.html')
-
-def institute(request: HttpRequest) -> HttpResponse:
-    return render(request, 'mainapp/institute.html')
-
-def student(request: HttpRequest) -> HttpResponse:
-    return render(request, 'mainapp/student.html')
+def other_page(request: HttpRequest, page: str) -> HttpResponse:
+    try:
+        template = get_template('mainapp/' + page + '.html')
+    except TemplateDoesNotExist:
+        raise Http404
+    return HttpResponse(template.render(request=request))
 
 @login_required
 def profile(request: HttpRequest) -> HttpResponse:
