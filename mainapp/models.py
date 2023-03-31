@@ -1,30 +1,32 @@
 from django.db import models
-from django.forms import ModelForm
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class User(models.Model):
-    first_name = models.CharField(max_length=64)
-    second_name = models.CharField(max_length=64, null=True, blank=True)
-    last_name = models.CharField(max_length=64)
-    email = models.EmailField(unique=True)
-    phone_number = models.TextField(unique=True, null=True, blank=True)
-    nickname = models.CharField(max_length=64, unique=True, null=True, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
-    password = models.CharField(null=False, blank=False, max_length=64)
-    is_active = models.BooleanField(default=False)
-    # is_activated = models.BooleanField(default=False)  # позже добавим для валидации электронного адреса
+# class User(models.Model):
+#     first_name = models.CharField(max_length=64)
+#     second_name = models.CharField(max_length=64, null=True, blank=True)
+#     last_name = models.CharField(max_length=64)
+#     email = models.EmailField(unique=True)
+#     phone_number = models.TextField(unique=True, null=True, blank=True)
+#     nickname = models.CharField(max_length=64, unique=True, null=True, blank=True)
+#     birth_date = models.DateField(null=True, blank=True)
+#     password = models.CharField(null=False, blank=False, max_length=64)
+#     is_active = models.BooleanField(default=False)
+#     # is_activated = models.BooleanField(default=False)  # позже добавим для валидации электронного адреса
 
-    def __str__(self) -> str:
-        if self.second_name:
-            return f'{self.first_name} {self.second_name} {self.last_name}'
-        return f'{self.first_name} {self.last_name}'
+#     def __str__(self) -> str:
+#         if self.second_name:
+#             return f'{self.first_name} {self.second_name} {self.last_name}'
+#         return f'{self.first_name} {self.last_name}'
     
 # class Passwords(models.Model):
 #     user_id = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='password')
 #     password = models.TextField(null=False, blank=False)
+
+class
     
-class UserData(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+# class UserData(models.Model):
+#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Organization(models.Model):
     name = models.CharField(max_length=64)
