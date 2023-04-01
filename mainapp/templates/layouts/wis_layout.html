@@ -25,12 +25,21 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'mainapp:mainpage' %}">Главная</a>
+                            <a class="nav-link active" href="{% url 'mainapp:mainpage' %}">Новости</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'mainapp:mainpage' %}">Вакансии</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'mainapp:mainpage' %}">Организации</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'mainapp:mainpage' %}">Поиск Научного руководителя</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainpage:profile' %}">Личный Кабинет</a>
+                            <a class="nav-link" href="{% url 'mainapp:profile' %}">Личный Кабинет</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'mainapp:logout' %}">Выход</a>

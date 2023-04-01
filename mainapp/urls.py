@@ -12,4 +12,5 @@ urlpatterns = [
     path('<str:page>/', views.other_page, name='other'),
     # path("register/", views.register, name="register"),
     path("accounts/register/", views.register, name="register"),
+    # path("", views.register, name="register"),
 ]

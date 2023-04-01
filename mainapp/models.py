@@ -17,6 +17,11 @@ class User(AbstractUser):
         if self.second_name:
             return f'{self.first_name} {self.second_name} {self.last_name}'
         return f'{self.first_name} {self.last_name}'
+    
+class UserAdditionalData(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField(null=True, blank=True, default=0, verbose_name='score')
+    about = models.TextField(blank=True)
 
 class Organization(models.Model):
     name = models.CharField(max_length=64)
@@ -27,6 +32,7 @@ class Organization(models.Model):
                                                   ('c', 'Компания'), 
                                                   ('i', 'Институт'), 
                                                   ('u', 'Университет')))
+    staff = models.ManyToManyField(User)
 
     def __str__(self) -> str:
         return f'Наименование: {self.name} ::: БИН {self.bin} ::: Тип {self.organization_type}'

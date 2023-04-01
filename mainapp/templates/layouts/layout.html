@@ -1,5 +1,23 @@
 {% load static %}
 
+<script>
+    function activateNavBtn(page) {
+        document.querySelectorAll('.nav-link').forEach(link_btn => {
+            link_btn.style.color = 'white';
+            link_btn.style.opacity = 0.5;
+        });
+        document.querySelector(`#${page}`).style.opacity = 1;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.nav-link').forEach(link_btn => {
+            link_btn.onclick = () => {
+                activateNavBtn(this.dataset.page)
+            }
+        })
+    })
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,37 +40,28 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'mainapp:other' page='mainpage' %}">Главная</a>
+                            <a class="nav-link active" id="main" data-page="main" href="{% url 'mainapp:other' page='mainpage' %}">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainapp:other' page='news' %}">Новости</a>
+                            <a class="nav-link active" id="news" data-page="news" href="{% url 'mainapp:other' page='news' %}">Новости</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainapp:other' page='company' %}">Компаниям</a>
+                            <a class="nav-link active" id="company" data-page="company" href="{% url 'mainapp:other' page='company' %}">Компаниям</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainapp:other' page='institute' %}">Институтам</a>
+                            <a class="nav-link active" id="institute" data-page="institute" href="{% url 'mainapp:other' page='institute' %}">Институтам</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainapp:other' page='student' %}">Студентам</a>
+                            <a class="nav-link active" id="student" data-page="student" href="{% url 'mainapp:other' page='student' %}">Студентам</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Личный Кабинет</a>
+                            <a class="nav-link active" href="{% url 'mainapp:login' %}">Вход</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainapp:logout' %}">Выход</a>
+                            <a class="nav-link active" href="{% url 'mainapp:register' %}">Регистрация</a>
                         </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainapp:login' %}">Вход</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainapp:register' %}">Регистрация</a>
-                        </li>
-                        {% endif %}
                     </ul>
                 </div>
             </div>
