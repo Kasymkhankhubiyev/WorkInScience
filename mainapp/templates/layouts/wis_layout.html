@@ -39,7 +39,7 @@
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mainapp:profile' %}">Личный Кабинет</a>
+                            <a class="nav-link" href="{% url 'mainapp:profile' username=user.username %}">Личный Кабинет</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'mainapp:logout' %}">Выход</a>

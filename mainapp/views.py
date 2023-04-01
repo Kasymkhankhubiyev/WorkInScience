@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import get_template
 from django.template import TemplateDoesNotExist
 
+from .models import *
+
 # Create your views here.
 def mainpage(request: HttpRequest) -> HttpResponse:
     if request.user.is_authenticated:
@@ -25,8 +27,15 @@ def other_page(request: HttpRequest, page: str) -> HttpResponse:
     return HttpResponse(template.render(request=request))
 
 @login_required
-def profile(request: HttpRequest) -> HttpResponse:
-    return render(request, 'wis/profile.html')
+def search_for_academic_advisor(request: HttpRequest) -> HttpResponse:
+    return render(request, 'wis/searchForAcademicAdvisor.html')
+
+@login_required
+def profile(request: HttpRequest, username: str) -> HttpResponse:
+    user = User.objects.get(username=username)
+    user_info = UserAdditionalData.objects.get(user=user.pk)
+    context = {'user_info': user_info}
+    return render(request, 'wis/profile.html', context)
 
 class WiSLoginView(LoginView):
     template_name = 'mainapp/login.html'

@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+"""
+#TODO 
+1. нужно добавить модель "Направления" - связь многие-со-многими
+"""
+
 # Create your models here.
 class User(AbstractUser):
     second_name = models.CharField(max_length=64, null=True, blank=True)
@@ -19,9 +24,12 @@ class User(AbstractUser):
         return f'{self.first_name} {self.last_name}'
     
 class UserAdditionalData(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     score = models.IntegerField(null=True, blank=True, default=0, verbose_name='score')
+    gpa = models.FloatField(null=True, blank=True, default=0.0, verbose_name='gpa')
     about = models.TextField(blank=True)
+    score_is_visible = models.BooleanField(null=False, default=True)
+    gpa_is_visible = models.BooleanField(null=False, default=True)
 
 class Organization(models.Model):
     name = models.CharField(max_length=64)
