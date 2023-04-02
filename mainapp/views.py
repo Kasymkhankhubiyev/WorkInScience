@@ -4,7 +4,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 
-from .forms import UserRegForm, UserLogInForm
+from .forms import UserRegForm, UserDataEditForm, UserAdditionalDataForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -38,7 +38,15 @@ def profile(request: HttpRequest, username: str) -> HttpResponse:
     return render(request, 'wis/profile.html', context)
 
 def profile_settings(request: HttpRequest, username: str) -> HttpResponse:
-    pass
+    if request.method == 'POST':
+        pass
+    else:
+        current_user = User.objects.get(username=username)
+        user_form = UserDataEditForm(instance=current_user)  # user = User.objects.get(username=username)
+        additional_form = UserAdditionalDataForm(instance=UserAdditionalData.objects.get(user=current_user.pk))
+        context = {'user_form': user_form, 'additional_form': additional_form}
+        return render(request, 'wis/profileSettings.html', context)
+
 
 class WiSLoginView(LoginView):
     template_name = 'mainapp/login.html'

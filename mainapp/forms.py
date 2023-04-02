@@ -1,8 +1,8 @@
-from django.forms import ModelForm, EmailField, CharField, PasswordInput, EmailInput
+from django.forms import ModelForm, EmailField, CharField, PasswordInput, Form
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 
-from .models import User, AvailableEmailDomens
+from .models import User, AvailableEmailDomens, UserAdditionalData
 
 from .exceptions import NotAvailableDomen, EmailIsBusy
 
@@ -90,3 +90,22 @@ class UserLogInForm(ModelForm):
         
     def get_user(self) -> User:
         return  User.objects.get(email=self.cleaned_data['email'])
+    
+
+class UserDataEditForm(ModelForm):
+    first_name = CharField(required=True, label='Имя')
+    second_name = CharField(required=False, label='Фмилия')
+    last_name = CharField(required=False, label='Отчество')
+    username = CharField(required=True, label='Логин')
+    email = EmailField(required=True, label='Электронный адрес')
+    
+    class Meta:
+        model = User
+        fields = ('first_name', 'second_name', 'last_name', 'username', 'email')
+
+
+class UserAdditionalDataForm(ModelForm):
+
+    class Meta:
+        model = UserAdditionalData
+        fields = ('score', 'gpa', 'about', 'scientific_degree', 'education')
