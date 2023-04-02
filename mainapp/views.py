@@ -37,6 +37,9 @@ def profile(request: HttpRequest, username: str) -> HttpResponse:
     context = {'user_info': user_info}
     return render(request, 'wis/profile.html', context)
 
+def profile_settings(request: HttpRequest, username: str) -> HttpResponse:
+    pass
+
 class WiSLoginView(LoginView):
     template_name = 'mainapp/login.html'
 
