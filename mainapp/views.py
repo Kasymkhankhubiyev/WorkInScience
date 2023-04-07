@@ -4,12 +4,15 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 
-from .forms import UserRegForm, UserDataEditForm, UserAdditionalDataForm
+from .forms import UserRegForm, UserDataEditForm, UserAdditionalDataForm, UserLogInForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.template.loader import get_template
 from django.template import TemplateDoesNotExist
+
+from django.contrib.auth import login, authenticate
+from django.shortcuts import redirect
 
 from .models import *
 
@@ -27,7 +30,7 @@ def other_page(request: HttpRequest, page: str) -> HttpResponse:
     return HttpResponse(template.render(request=request))
 
 @login_required
-def search_for_academic_advisor(request: HttpRequest) -> HttpResponse:
+def search_academic_advisor(request: HttpRequest) -> HttpResponse:
     return render(request, 'wis/searchForAcademicAdvisor.html')
 
 @login_required
@@ -48,8 +51,24 @@ def profile_settings(request: HttpRequest, username: str) -> HttpResponse:
         return render(request, 'wis/profileSettings.html', context)
 
 
-class WiSLoginView(LoginView):
-    template_name = 'mainapp/login.html'
+# class WiSLoginView(LoginView):
+#     template_name = 'mainapp/login.html'
+
+def WisLoginView(request: HttpRequest):
+    if request.method == 'POST':
+        login_form = UserLogInForm(request.POST)
+        
+        if login_form.is_valid():
+            user = login_form.get_user()
+            login(request, user)
+            return redirect('/accounts/profile/' + user.username)
+        else:
+            context = {'form': login_form}
+            return render(request, 'mainapp/login.html', context)
+    else:
+        login_form = UserLogInForm()
+        context = {'form': login_form}
+        return render(request, 'mainapp/login.html', context)
 
 class WiSLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'mainapp/logout.html'

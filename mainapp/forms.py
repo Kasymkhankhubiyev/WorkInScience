@@ -1,5 +1,5 @@
-from django.forms import ModelForm, EmailField, CharField, PasswordInput, Form
-from django.contrib.auth import password_validation
+from django.forms import ModelForm, EmailField, CharField, PasswordInput, Form, EmailInput
+from django.contrib.auth import password_validation, authenticate
 from django.core.exceptions import ValidationError
 
 from .models import User, AvailableEmailDomens, UserAdditionalData
@@ -65,8 +65,8 @@ class UserRegForm(ModelForm):
     
 
 class UserLogInForm(ModelForm):
-    email = EmailField(label='Электронный адрес', required=True)
     password = CharField(label='Пароль', widget=PasswordInput, required=True)
+    email = EmailField(label='email:', required=True)
 
     class Meta:
         model = User
@@ -83,7 +83,8 @@ class UserLogInForm(ModelForm):
         email = self.cleaned_data['email']
         try:
             user = User.objects.get(email=email)
-            if user.password != password:
+            user = authenticate(username=user.username, password=password)
+            if user is None:
                 raise ValidationError({'email': ValidationError('Неверный логин или пароль')})
         except User.DoesNotExist as e:
             raise ValidationError({'email': ValidationError('Неверный логин или пароль')})
